@@ -22,6 +22,7 @@
 # 4. Muestra la vida en cada turno.
 # 5. Muestra el resultado final.
 import random
+import time
 
 
 vida_deadpool = int(input("Ingrese la vida inicial de Deadpool(min 100): "))
@@ -42,52 +43,70 @@ danno_D = True
 danno_W = True
 
 while True:
-    print(f"Turno {turno}")
+    print("###########################################")
+    print(f"Turno {turno}\n")
     print(f"Vida de Deadpool: {vida_deadpool}")
-    print(f"Vida de Wolverine: {vida_wolverine}")
+    print(f"Vida de Wolverine: {vida_wolverine}\n")
 
     # Daño de Deadpool
     if danno_W == True:
         danno_deadpool = random.randrange(10, 100)
     else:
         danno_deadpool = 0
-        print("Daño maximo recibido, deadpool se esta recuperando")
+        print("Daño maximo recibido, deadpool se esta recuperando".upper())
 
     # Daño de Wolverine
     if danno_D == True:
         danno_wolverine = random.randrange(10, 120)
     else:
         danno_wolverine = 0
-        print("Daño maximo recibido, wolverine se esta recuperando")
+        print("Daño maximo recibido, wolverine se esta recuperando".upper())
 
-    # Daño maximo
+    # Daño maximo deadpool
     if danno_deadpool == 100:
         danno_D = False
         print("Daño de deadpool:", danno_deadpool)
         print("Daño maximo recibido, Wolverine no puede atacar en el siguiente turno")
     else:
         danno_D = True
-        print("Daño de deadpool:", danno_deadpool)
+        print(f"Daño de deadpool: {danno_deadpool}" )
         
-    # Daño maximo
+    # Daño maximo wolverine
     if danno_wolverine == 120:
         danno_W = False
         print("Daño de wolverine:", danno_wolverine)
-        print("Daño maximo recibido, Deadpool no puede atacar en el siguiente turno")
+        print("Daño maximo recibido, Deadpool no puede atacar en el siguiente turno\n")
     else:
         danno_W = True
-        print("Daño de deadpool:", danno_wolverine)
+        print(f"Daño de wolverine: {danno_wolverine}\n")
 
     # Vida despues de la batalla
-    vida_deadpool = vida_deadpool - danno_wolverine
-    vida_wolverine = vida_wolverine - danno_deadpool
+    probabilidad_deadpool = random.random()
+    probabilidad_wolverine = random.random()
+
+    if probabilidad_deadpool <= 0.25:
+        print("Deadpool evito el ataque de Wolverine")
+    else:
+        vida_deadpool -= danno_wolverine
+
+    if probabilidad_wolverine <= 0.2:
+        print("Wolverine evito el ataque de Deadpool")
+    else:
+        vida_wolverine -= danno_deadpool
 
     # Turnos
     turno = turno + 1
 
+    # Final de la battalla
     if vida_deadpool <= 0:
-        print("Wolverine ha ganado", vida_wolverine)
+        print("Wolverine ha ganado con", vida_wolverine ,"de vida")
+        print("Batalla finalizada")
         break
     if vida_wolverine <= 0:
-        print("Deadpool ha ganado", vida_deadpool)
+        print("Deadpool ha ganado con", vida_deadpool, "de vida")
+        print("Batalla finalizada")
         break
+    
+    # Tiempo de espera entre turnos
+    print(F"Turno {turno -1} finalizado")
+    time.sleep(2)
